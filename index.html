@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<!-- saved from url=(0026)http://www.aidaroe.com/pro -->
+<html lang="en" class=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<title>Aidaroe</title>
+	<meta name="keywords" content="aidaroe,交叉口分析,交叉口渠化,交叉口流量图">
+	<meta name="description" content="">
+	<link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon"> 
+	<link rel="stylesheet" href="./css/adStyle.css" type="text/css">
+	<link rel="stylesheet" href="./css/sweetalert.css" type="text/css">
+	<link rel="stylesheet" href="./css/colpick.css" type="text/css">
+	<script src="./js/hm.js"></script><script src="./js/jquerymin.js" type="text/javascript"></script>
+	<script src="./js/colpick.js" type="text/javascript"></script>
+	<script src="./js/sweetalert.min.js" type="text/javascript"></script>
+	<script src="./js/nprogress.js" type="text/javascript"></script>
+	<script type="text/javascript">
+            $(function(){
+                NProgress.configure({
+                    template: $('#splash-template').html()
+                });
+                NProgress.start();
+            });         
+    </script>
+	<script src="./js/draw.js" type="text/javascript"></script>
+
+	<script src="./js/echarts.common.min.js" type="text/javascript"></script>
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "//hm.baidu.com/hm.js?9444d4fb0f2040b750e4ec14eed1eca0";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	
+
+</head>
+<body>
+	 <script type="text" id="splash-template">
+            <div class="splash card">
+                <div role="spinner">
+                    <div class="spinner-icon"></div>
+                </div>
+                <p class="lead" >AIDAROE</p>
+                <div class="progress">
+                    <div class="mybar" role="bar">
+                    </div>
+                </div>
+            </div>
+    </script>
+	<div class="head">
+		<div class="h_con">
+			<a href="http://www.aidaroe.com/login" target="_blank" class="c_login"></a>
+			<div class="c_hr"></div>
+			<a href="http://www.aidaroe.com/contact" class="c_navContact">联系我们</a>
+			<a href="http://www.aidaroe.com/authority" class="c_navPurse">软件授权</a>
+			<a href="http://www.aidaroe.com/doc" class="c_navDoc">文 档</a>
+			<a href="http://www.aidaroe.com/pro" class="c_navAd">Aidaroe</a>
+			<a href="http://www.aidaroe.com/" class="c_navHome">首 页</a>
+		</div>
+	</div>
+	<div class="adContainer" id="adContainer" style="position: absolute; top: 20px; left: 111.5px;">
+		<div class="a_topBar">
+			<a href="http://www.aidaroe.com/pro" class="t_aidaroe">AIDAROE</a>
+			<div class="t_hr"></div>
+			<input type="text" id="intName" class="t_intName" onblur="intNameChange(this.value)" placeholder="交叉口名称">
+			<span class="t_edit"></span>
+			<a href="javaScript:" class="t_save" onclick="saveAidaroe()"></a>
+			<a href="http://www.aidaroe.com/pro" class="t_new" target="blank"></a>
+		</div>
+		<div class="a_leftBar">
+			<div class="l_tool" id="toolBtnConObj01" onclick="intGeoClick()" style="border: 1px solid rgb(236, 71, 20);">
+				<a href="javaScript:" id="intGeo" class="intGeo" style="background: url(&quot;http://www.aidaroe.com/img/Iconselect.png&quot;) 0px -2px / auto no-repeat scroll padding-box border-box rgba(0, 0, 0, 0);"></a>
+			</div>
+			<div class="l_tool" id="toolBtnConObj02" onclick="intChaClick()">
+				<a href="javaScript:" id="intCha" class="intCha"></a>
+			</div>
+			<div class="l_tool" id="toolBtnConObj03" onclick="intTfClick()">
+				<a href="javaScript:" id="intTf" class="intTf"></a>
+			</div>
+			<div class="l_tool" id="toolBtnConObj04" onclick="intSigClick()">
+				<a href="javaScript:" id="intSig" class="intSig"></a>
+			</div>
+			<div class="l_toolev" id="toolBtnConObj05" onclick="evVcClick()">
+				<a href="javaScript:" id="evVc" class="evVc"></a>
+				<span class="t_tip" id="vcSpan" style="color: rgb(51, 51, 51);">V/c</span>
+			</div>
+			
+			<div class="l_tool" id="toolBtnConObj07" onclick="evDelClick()">
+				<a href="javaScript:" id="evDel" class="evDel"></a>
+				<span class="t_tip" id="delSpan" style="color: rgb(51, 51, 51);">Del</span>
+			</div>
+			<div class="l_tool" id="toolBtnConObj08" onclick="evQueClick()">
+				<a href="javaScript:" id="evQue" class="evQue"></a>
+				<span class="t_tip" id="queSpan" style="color: rgb(51, 51, 51);">Que</span>
+			</div>	
+			<div class="l_tool" id="toolBtnConObj06" onclick="evLosClick()">
+				<a href="javaScript:" id="evLos" class="evLos"></a>
+				<span class="t_tip" id="losSpan" style="color: rgb(51, 51, 51);">Los</span>
+			</div>								
+		</div>
+		<div class="a_tipCon01" id="tipConObj01" style="display: block;">
+			<p class="a_tip">最多支持五路相交</p>
+		</div>
+		<div class="a_tipCon02" id="tipConObj02" style="display: none;">
+			<div class="t_chaSiuCon1" id="chaSiuCon1">			
+				<input type="text" placeholder="方案1" class="t_chaSius1" id="chaSiuInput1" onclick="chaSiuInputClick1()" onblur="chaSiuInput1Change(this.value)">
+				<span class="t_chaEdit1"></span>	
+				<a href="javaScript:" class="t_chaDelete1" id="chaSiuDelete1" onclick="chaSiuDelete1()"></a>		
+				<a href="javaScript:" class="t_chaAdd1" id="chaSiuAdd1" onclick="chaSiuAdd1()"></a>
+			</div>
+			
+			<div class="t_chaSiuCon2" id="chaSiuCon2">
+				<div class="t_chaHr2"></div>
+				<input type="text" placeholder="方案2" class="t_chaSius2" id="chaSiuInput2" onclick="chaSiuInputClick2()" onblur="chaSiuInput2Change(this.value)">
+				<span class="t_chaEdit2"></span>	
+				<a href="javaScript:" class="t_chaDelete2" id="chaSiuDelete2" onclick="chaSiuDelete2()"></a>		
+				<a href="javaScript:" class="t_chaAdd2" id="chaSiuAdd2" onclick="chaSiuAdd2()"></a>
+			</div>
+
+			<div class="t_chaSiuCon3" id="chaSiuCon3">
+				<div class="t_chaHr3"></div>
+				<input type="text" placeholder="方案3" class="t_chaSius3" id="chaSiuInput3" onclick="chaSiuInputClick3()" onblur="chaSiuInput3Change(this.value)">
+				<span class="t_chaEdit3"></span>
+				<a href="javaScript:" class="t_chaDelete3" id="chaSiuDelete3" onclick="chaSiuDelete3()"></a>
+				<a href="javaScript:" class="t_chaAdd3" id="chaSiuAdd3" onclick="chaSiuAdd3()"></a>
+			</div>
+		</div>
+		<div class="a_tipCon03" id="tipConObj03" style="display: none;">
+			<span class="tfChaSpan">渠 化</span>
+			<select name="" id="tfChaSelectObj" class="tfChaSelect" onchange="tfChaSelectOnchange(this.value)">
+				<option value="">方案1</option>
+			</select>
+			<span class="tfChaSelectArrow"></span>
+			<div class="tfSiuCon1" id="tfSiuCon1Obj">
+				<div class="t_tfHr01"></div>
+				<input type="text" placeholder="方案1" class="t_tfSius01" id="tfSius01Obj" onclick="tfSiuInputClick1()" onblur="tfSiuInput1Change(this.value)">
+				<span class="t_tfEdit01"></span>
+				<a href="javaScript:" class="t_tfSiuAdd01" onclick="tfSiuAdd01()"></a>
+				<a href="javaScript:" class="t_tfSiuDelete01" onclick="tfSiuDelete01()"></a>
+			</div>
+
+			<div class="tfSiuCon2" id="tfSiuCon2Obj">
+				<div class="t_tfHr02"></div>
+				<input type="text" placeholder="方案2" class="t_tfSius02" id="tfSius02Obj" onclick="tfSiuInputClick2()" onblur="tfSiuInput2Change(this.value)">
+				<span class="t_tfEdit02"></span>
+				<a href="javaScript:" class="t_tfSiuAdd02" onclick="tfSiuAdd02()"></a>
+				<a href="javaScript:" class="t_tfSiuDelete02" onclick="tfSiuDelete02()"></a>
+			</div>
+
+			<div class="tfSiuCon3" id="tfSiuCon3Obj">
+				<div class="t_tfHr03"></div>
+				<input type="text" placeholder="方案3" class="t_tfSius03" id="tfSius03Obj" onclick="tfSiuInputClick3()" onblur="tfSiuInput3Change(this.value)">
+				<span class="t_tfEdit03"></span>
+				<a href="javaScript:" class="t_tfSiuAdd03" onclick="tfSiuAdd03()"></a>
+				<a href="javaScript:" class="t_tfSiuDelete03" onclick="tfSiuDelete03()"></a>
+			</div>
+		</div>
+
+		
+
+		<div class="a_tipCon04" id="tipConObj04" style="display: none;">
+			<span class="sigChaSpan">渠 化</span>
+			<select name="" id="sigChaSelectObj" class="sigChaSelect" onchange="sigChaSelectChange(this.value)">
+				<option value="">方案1</option>
+			</select>
+			<span class="sigChaSelectArrow"></span>
+			<div class="t_sigHr01"></div>
+
+			<span class="sigTfSpan">流 量</span>
+			<select name="" id="sigTfSelectObj" class="sigTfSelect" onchange="sigTfSelectChange(this.value)">
+				<option value="">方案1</option>
+			</select>
+			<span class="sigTfSelectArrow"></span>
+			<div class="t_sigHr02"></div>
+
+			<div class="sigSiuCon1" id="sigSiuCon1Obj">
+				<div class="s_sigHr01"></div>
+				<input type="text" placeholder="方案1" class="s_sigSius01" id="sigSius01Obj" onclick="sigSiuInputClick1()" onblur="sigSiuInput1Change(this.value)">
+				<span class="s_sigEdit01"></span>
+				<a href="javaScript:" class="s_sigSiuAdd01" onclick="sigSiuAdd01()"></a>
+				<a href="javaScript:" class="s_sigSiuDelete01" onclick="sigSiuDelete01()"></a>
+			</div>
+
+			<div class="sigSiuCon2" id="sigSiuCon2Obj">
+				<div class="s_sigHr02"></div>
+				<input type="text" placeholder="方案2" class="s_sigSius02" id="sigSius02Obj" onclick="sigSiuInputClick2()" onblur="sigSiuInput2Change(this.value)">
+				<span class="s_sigEdit02"></span>
+				<a href="javaScript:" class="s_sigSiuAdd02" onclick="sigSiuAdd02()"></a>
+				<a href="javaScript:" class="s_sigSiuDelete02" onclick="sigSiuDelete02()"></a>
+			</div>
+
+			<div class="sigSiuCon3" id="sigSiuCon3Obj">
+				<div class="s_sigHr03"></div>
+				<input type="text" placeholder="方案3" class="s_sigSius03" id="sigSius03Obj" onclick="sigSiuInputClick3()" onblur="sigSiuInput3Change(this.value)">
+				<span class="s_sigEdit03"></span>
+				<a href="javaScript:" class="s_sigSiuAdd03" onclick="sigSiuAdd03()"></a>
+				<a href="javaScript:" class="s_sigSiuDelete03" onclick="sigSiuDelete03()"></a>
+			</div>
+
+		</div>
+
+		<div class="a_tipCon05" id="tipConObj05" style="display: none;">
+			<span class="vcChaSpan">渠 化</span>
+			<select id="vcChaSelectObj" class="vcChaSelect" onchange="vcChaSelectOnchange(this.value)">
+				<option value="">方案1</option>
+			</select>
+			<span class="vcChaSelectArrow"></span>
+			<div class="t_vcHr01"></div>
+
+			<span class="vcTfSpan">流 量</span>
+			<select id="vcTFSelectObj" class="vcTfSelect" onchange="vcTfSelectOnchange(this.value)">
+				<option value="">方案1</option>
+			</select>
+			<span class="vcTfSelectArrow"></span>
+			<div class="t_vcHr02"></div>
+
+			<span class="vcSigSpan">信 号</span>
+			<select id="vcSigSelectObj" class="vcSigSelect" onchange="vcSigSelectOnchange(this.value)">
+				<option value="">方案1</option>
+			</select>
+			<span class="vcSigSelectArrow"></span>			
+		</div>
+
+		<div class="a_tipCon06" id="tipConObj06" style="display: none;">
+			<span class="losChaSpan">渠 化</span>
+			<select id="losChaSelectObj" class="losChaSelect" onchange="losChaSelectOnchange(this.value)">
+				<option value="">方案1</option>
+			</select>
+			<span class="losChaSelectArrow"></span>
+			<div class="t_losHr01"></div>
+
+			<span class="losTfSpan">流 量</span>
+			<select id="losTfSelectObj" class="losTfSelect" onchange="losTfSelectOnchange(this.value)">
+				<option value="">方案1</option>
+			</select>
+			<span class="losTfSelectArrow"></span>
+			<div class="t_losHr02"></div>
+
+			<span class="losSigSpan">信 号</span>
+			<select id="losSigSelectObj" class="losSigSelect" onchange="losSigSelectOnchange(this.value)">
+				<option value="">方案1</option>
+			</select>
+			<span class="losSigSelectArrow"></span>			
+		</div>
+
+		<div class="a_tipCon07" id="tipConObj07" style="display: none;">
+			<span class="delChaSpan">渠 化</span>
+			<select id="delChaSelectObj" class="delChaSelect" onchange="delChaSelectOnchange(this.value)">
+				<option value="">方案1</option>
+			</select>
+			<span class="delChaSelectArrow"></span>
+			<div class="t_delHr01"></div>
+
+			<span class="delTfSpan">流 量</span>
+			<select id="delTfSelectObj" class="delTfSelect" onchange="delTfSelectOnchange(this.value)">
+				<option value="">方案1</option>
+			</select>
+			<span class="delTfSelectArrow"></span>
+			<div class="t_delHr02"></div>
+
+			<span class="delSigSpan">信 号</span>
+			<select id="delSigSelectObj" class="delSigSelect" onchange="delSigSelectOnchange(this.value)">
+				<option value="">方案1</option>
+			</select>
+			<span class="delSigSelectArrow"></span>			
+		</div>
+
+		<div class="a_tipCon08" id="tipConObj08" style="display: none;">
+			<span class="queChaSpan">渠 化</span>
+			<select id="queChaSelectObj" class="queChaSelect" onchange="queChaSelectOnchange(this.value)">
+				<option value="">方案1</option>
+			</select>
+			<span class="queChaSelectArrow"></span>
+			<div class="t_queHr01"></div>
+
+			<span class="queTfSpan">流 量</span>
+			<select id="queTfSelectObj" class="queTfSelect" onchange="queTfSelectOnchange(this.value)">
+				<option value="">方案1</option>
+			</select>
+			<span class="queTfSelectArrow"></span>
+			<div class="t_queHr02"></div>
+
+			<span class="queSigSpan">信 号</span>
+			<select id="queSigSelectObj" class="queSigSelect" onchange="queSigSelectOnchange(this.value)">
+				<option value="">方案1</option>
+			</select>
+			<span class="queSigSelectArrow"></span>			
+		</div>
+
+
+
+		
+		<div class="a_canvasCon" id="canvasConObj" style="overflow: hidden;">
+			<canvas id="drawCanvas" width="550" height="550"></canvas>
+			<div class="c_iniPMoveCon" id="c_iniPMoveConObj" style="display: block;">
+				<a href="javaScript:" class="c_iniPMove" id="c_iniPMoveObj" onclick="chaIniPMove()"></a>
+			</div>
+			<div class="c_refreshCon" id="c_refreshConObj" style="display: none;">
+				<a href="javaScript:" class="c_refresh" id="c_refreshObj" onclick="chaRefresh()">N</a>
+			</div>
+			<div class="c_peditCon" id="c_peditConObj" style="display: none;">
+				<a href="javaScript:" class="c_pedit" id="c_peditObj" onclick="chaPEdit()"></a>
+			</div>
+			<div class="c_errorRefreshCon" id="c_errorRefreshConObj" style="display: none;">
+				<a href="javaScript:" class="c_errorRefresh" id="c_errorRefreshObj" onclick="chaErrorRefresh()"></a>
+			</div>
+
+			<div class="c_bgRefreshCon" id="c_bgRefreshConObj" style="display: none;">
+				<a href="javaScript:" class="c_bgRefresh" id="c_bgRefreshObj" onclick="chaBgRefresh()">BR</a>
+			</div>
+
+			<div class="c_radiusAddCon" id="c_radiusAddConObj" style="display: none;">
+				<a href="javaScript:" class="c_radiusAdd" id="c_radiusAddObj" onclick="c_radiusAdd()">R</a>
+				<span class="c_radiusAddSpan">+</span>
+			</div>
+
+			<div class="c_radiusReduceCon" id="c_radiusReduceConObj" style="display: none;">
+				<a href="javaScript:" class="c_radiusReduce" id="c_radiusReduceObj" onclick="c_radiusReduce()">R</a>
+				<span class="c_radiusReduceSpan">-</span>
+			</div>
+
+
+			<div class="c_colorRoadCon" id="c_colorRoadConObj" style="display: none;">
+				<a href="javaScript:" class="c_colorRoad" id="c_colorRoadObj">CR</a>
+				<span class="c_colorRoadSpan"></span>
+			</div>
+
+			<div class="c_colorNoneCon" id="c_colorNoneConObj" style="display: none;">
+				<a href="javaScript:" class="c_colorNone" id="c_colorNoneObj">CN</a>
+				<span class="c_colorNoneSpan"></span>
+			</div>
+
+			<div class="c_colorGreenCon" id="c_colorGreenConObj" style="display: none;">
+				<a href="javaScript:" class="c_colorGreen" id="c_colorGreenObj">CG</a>
+				<span class="c_colorGreenSpan"></span>
+			</div>
+
+			<div class="c_colorPeopleCon" id="c_colorPeopleConObj" style="display: none;">
+				<a href="javaScript:" class="c_colorPeople" id="c_colorPeopleObj">CP</a>
+				<span class="c_colorPeopleSpan"></span>
+			</div>
+
+
+
+			<div class="c_tfPsMoveCon" id="c_tfPsMoveConObj" style="display: none;">
+				<a href="javaScript:" class="c_tfPsMove" id="c_tfPsMoveObj" onclick="tfPsMove()"></a>
+			</div>
+
+			<div class="anaAllCon" id="anaAllConObj"></div>			
+		</div>
+		<div class="rightBar01" id="rightBarObj01" style="display: block;">
+			<input type="button" class="r_reset01" id="geoReset" value="重新绘制" onclick="geoResetClick()">
+		</div>
+		<div class="rightBar02" id="rightBarObj02" style="display: none;">
+			<span class="chaDir">方 向</span>
+			<select name="" id="c_dirSlect" class="chaDirSelect" onchange="chaDirSelectChange(this.value)">
+				
+			</select>
+			<span class="chaDirSelectArrow"></span>
+
+			<span class="chaDirName">路 名</span>
+			<input type="text" id="c_roadName" class="chaDirNameInput" value="" onblur="chaRoadNameChange(this.value)">
+
+			<div class="chaConDirOne" id="c_chaConDirOne">
+				<a class="c_aroundCon" id="c_aroundCon" href="javascript:void(0);" onclick="chaAroundArrowClick()">
+				</a>
+			</div>
+			<div class="chaConDirTwo" id="c_chaConDirTwo">
+				<a class="c_leftCon" id="c_leftCon" href="javascript:void(0);" onclick="chaLeftArrowClick()">
+				</a>
+			</div>
+			<div class="chaConDirThree" id="c_chaConDirThree">
+				<a class="c_straightCon" id="c_straightCon" href="javascript:void(0);" onclick="chaStraightArrowClick()">
+				</a>
+			</div>
+			<div class="chaConDirFour" id="c_chaConDirFour">
+				<a class="c_rightCon" id="c_rightCon" href="javascript:void(0);" onclick="chaRightArrowClick()">
+				</a>
+			</div>
+			<span class="chaInLaneNum">进口车道</span>
+			<select name="" id="c_inLane" class="chaInLaneNumSelect" onchange="chaInLaneNumSelectChange(this.value)">
+				<option value="0">0</option>
+				<option value="0.25">0.25</option>
+				<option value="0.5">0.5</option>
+				<option value="1">1</option>
+				<option value="1.5">1.5</option>
+				<option value="2">2</option>
+				<option value="2.5">2.5</option>
+				<option value="3">3</option>
+				<option value="3.5">3.5</option>
+				<option value="4">4</option>
+				<option value="4.5">4.5</option>
+				<option value="5">5</option>
+				<option value="5.5">5.5</option>
+				<option value="6">6</option>
+				<option value="6.5">6.5</option>
+				<option value="7">7</option>
+			</select>
+			<span class="chaInLaneNumSelectArrow"></span>
+			<span class="chaLaneWidth">车道宽度</span>
+			<input type="text" id="c_inLaneWidth" class="chaLaneWidthInput" value="3.5" onblur="chaLaneWidthChange(this.value)">
+			<span class="chaLaneWidthUnit">m</span>
+
+			<span class="chaSeparation">分隔带宽</span>
+			<input type="text" id="c_separation" class="chaSeparationInput" value="0" onblur="chaSeparationChange(this.value)">
+			<span class="chaSeparationInputUnit">m</span>
+
+			<span class="chaSeparationStyle">分隔形式</span>
+			<select name="" id="c_separationStyle" class="chaSeparationStyleSelect" onchange="chaSeparationStyleSelectChange(this.value)">
+				<option value="0">双黄线</option>
+				<option value="5">单黄线</option>
+				<option value="1">护栏</option>
+				<option value="2">鱼肚线</option>
+				<option value="3">黄斜线</option>				
+				<option value="4">绿化带</option>
+			</select>
+			<span class="chaSeparationStyleSelectArrow"></span>
+
+			<span class="chaRightCha">右转渠化</span>
+			<select name="" id="c_rightChanel" class="chaRightChaSelect" onchange="chaRightChaSelectChange(this.value)">
+				<option value="0">无</option>
+				<option value="1">划线岛(无单独出口车道)</option>
+				<option value="2">划线岛(有单独出口车道)</option>
+				<option value="3">固体岛(无单独出口车道)</option>
+				<option value="4">固体岛(有单独出口车道)</option>
+			</select>
+			<span class="chaRightChaSelectArrow"></span>
+
+			<span class="chaLaneSpeed">路段速度</span>
+			<input type="text" id="c_laneSpeed" class="chaLaneSpeedInput" value="40" onblur="chaLaneSpeedInputChange(this.value)">
+			<span class="chaLaneSpeedUnit">km/h</span>
+
+			<span class="chaShortLane">进口展宽</span>
+			<select name="" id="c_inShortLane" class="chaShortLaneSelect" onchange="chaShortLaneSelectChange(this.value)">
+				<option value="0">否</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+			</select>
+			<span class="chaShortLaneSelectArrow"></span>
+
+			<span class="chaFrontAround">提前掉头</span>
+			<select name="" id="c_frontAround" class="chaFrontAroundSelect" onchange="chaFrontAroundSelectChange(this.value)">
+				<option value="0">否</option>
+				<option value="1">停车线位置</option>
+				<option value="2">停车线上游</option>
+			</select>
+			<span class="chaFrontAroundSelectArrow"></span>
+			
+			<span class="chaShortLen">展宽段长</span>
+			<input type="text" id="c_inShortLaneLen" class="chaShortLenInput" value="60" onblur="chaShortLenInputChange(this.value)">
+			<span class="chaShortLenUnit">m</span>
+			<a href="javaScript:" class="chaShortDrawLenAdd" id="chaShortDrawLenAdd" onclick="chaShortDrawLenAddClick()"></a>
+			<a href="javaScript:" class="chaShortDrawLenReduce" id="chaShortDrawLenReduce" onclick="chaShortDrawLenReduceClick()"></a>
+
+			<span class="chaShortLaneWidth">展宽车道宽</span>
+			<input type="text" id="c_inShortLaneWidth" class="chaShortLaneWidthInput" value="3.0" onblur="chaShortLaneWidthChange(this.value)">
+			<span class="chaShortLaneWidthUnit">m</span>
+
+			<span class="chaShortGraLen">渐变段长</span>
+			<input type="text" id="c_inShortLaneGraLen" class="chaShortGraLenInput" value="25" onblur="chaShortGraLenInputChange(this.value)">
+			<span class="chaShortGraLenUnit">m</span>
+			<a href="javaScript:" class="chaShortGraLenAdd" id="chaShortGraLenAdd" onclick="chaShortGraLenAddClick()"></a>
+			<a href="javaScript:" class="chaShortGraLenReduce" id="chaShortGraLenReduce" onclick="chaShortGraLenReduceClick()"></a>
+
+			<span class="chaShortInOffset">内侧偏移</span>
+			<input type="text" id="c_inShortLaneInOffset" class="chaShortInOffsetInput" value="0" onblur="chaShortInOffsetChange(this.value)">
+			<span class="chaShortInOffsetUnit">m</span>
+
+			<span class="chaRedRigthTurn">红灯时右转</span>
+			<select id="c_redRightTurn" class="chaRedRigthTurnSelect" onchange="chaRedRigthTurnSelectChange(this.value)">
+				<option value="0">否</option>
+				<option value="1">是</option>
+			</select>
+			<span class="chaRedRigthTurnSelectArrow"></span>
+
+
+			<span class="chaSideWalk">人行道</span>
+			<select name="" id="c_sidewalk" class="chaSideWalkSelect" onchange="chaSideWalkSelectChange(this.value)">
+				<option value="0">否</option>
+				<option value="1" selected="selected">是</option>
+			</select>
+			<a href="javaScript:" class="chaSidewalkLenAdd" id="chaSidewalkLenAdd" onclick="chaSidewalkLenAddClick()"></a>
+			<a href="javaScript:" class="chaSidewalkLeneduce" id="chaSidewalkLeneduce" onclick="chaSidewalkLeneduceClick()"></a>
+
+			<span class="chaSafeIsLand">安全岛</span>
+			<select name="" id="c_safeIsland" class="chaSafeIsLandSelect" onchange="chaSafeIsLandSelectChange(this.value)">
+				<option value="0">否</option>
+				<option value="1">是</option>
+			</select>
+			<span class="chaSafeIsLandSelectArrow"></span>
+
+			<span class="chaLeftChans">左转待转</span>
+			<select name="" id="c_leftTran" class="chaLeftChansSelect" onchange="chaLeftChansSelectChange(this.value)">
+				<option value="0">否</option>
+				<option value="1">是</option>
+			</select>
+			<span class="chaLeftChansSelectArrow"></span>
+
+			<span class="chaStraightChans">直行待转</span>
+			<select name="" id="c_straightTran" class="chaStraightChansSelect" onchange="chaStraightChansSelectChange(this.value)">
+				<option value="0">否</option>
+				<option value="1">是</option>
+			</select>
+			<span class="chaStraightChansSelectArrow"></span>
+
+			<span class="chaExportLaneNum">出口车道</span>
+			<select name="" id="c_outLane" class="chaExportLaneNumSelect" onchange="chaExportLaneNumSelectChange(this.value)">
+				<option value="0">0</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3" selected="selected">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+				<option value="6">6</option>
+				<option value="7">7</option>
+			</select>
+			<span class="chaExportLaneNumSelectArrow"></span>
+			<span class="chaExportLaneWidth">车道宽度</span>
+			<input type="text" id="c_outLaneWidth" class="chaExportLaneWidthInput" value="3.5" onblur="chaExportLaneWidthChange(this.value)">
+			<span class="chaExportLaneWidthUnit">m</span>
+
+			<span class="chaExportShortLane">出口展宽</span>
+			<select name="" id="c_outShortLane" class="chaExportShortLaneSelect" onchange="chaExportShortLaneSelectChange(this.value)">
+				<option value="0">否</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+			</select>
+			<span class="chaExportShortLaneSelectArrow"></span>
+
+			<span class="chaNoneVehicleLane">非机动车</span>
+			<select name="" id="c_nonVehicle" class="chaNoneVehicleLaneSelect" onchange="chaNoneVehicleLaneSelectChange(this.value)">
+				<option value="0">否</option>
+				<option value="1">是</option>
+			</select>
+			<span class="chaNoneVehicleLaneSelectArrow"></span>
+
+			<span class="chaNoneVehicleLaneWidth">车道宽度</span>
+			<input type="text" id="c_noneVehicleWidth" class="chaNoneVehicleLaneWidthInput" value="2.0" onblur="chaNoneVehicleLaneWidthInputChange(this.value)">
+			<span class="chaNoneVehicleLaneWidthUnit">m</span>
+
+			<span class="chaNoneVehicleSeparation">分隔形式</span>
+			<select name="" id="c_noneVehicleSeparation" class="chaNoneVehicleSeparationSelect" onchange="chaNoneVehicleSeparationSelectChange(this.value)">
+				<option value="0">划线</option>
+				<option value="1">护栏</option>
+				<option value="2">绿化带</option>
+			</select>
+			<span class="chaNoneVehicleSeparationSelectArrow"></span>
+
+			<input type="button" class="chaDataRest" id="chaDataRest" value="数据重置" onclick="chaDataRestClick()">
+			<input type="button" class="chaImgExport" id="chaImgExport" value="输出图片" onclick="chaImgExportOnclick()">
+		</div>
+
+		<div class="rightBar03" id="rightBarObj03" style="display: none;">
+			<span class="tfDir">方 向</span>
+			<select name="" id="t_dirSelect" class="tfDirSelect" onchange="tfDirSelectChange(this.value)">
+				<option value="">方向1</option>
+			</select>
+			<span class="tfDirSelectArrow"></span>
+
+			<span class="tfDirName">路 名</span>
+			<input type="text" id="t_dirNameInput" class="tfDirNameInput" value="方向1" onblur="tfDirNameInputChange(this.value)">
+
+			<span class="tfColor">颜 色</span>
+			<select name="" id="t_colorSelect" class="tfColorSelect" onchange="tfColorSelectChange(this.value)">
+				<option value="1">方案1</option>
+				<option value="2">方案2</option>
+				<option value="3">方案3</option>
+				<option value="4">方案4</option>
+				<option value="5">方案5</option>
+				<option value="6">方案6</option>
+			</select>
+			<span class="tfColorSelectArrow"></span>
+
+			<span class="tfScale">比 例</span>
+			<select name="" id="t_scaleSelect" class="tfScaleSelect" onchange="tfScaleSelectChange(this.value)">
+				<option value="0.1">0.1</option>
+				<option value="0.2">0.2</option>
+				<option value="0.5">0.5</option>
+				<option value="0.8">0.8</option>
+				<option value="1.0" selected="selected">1.0</option>
+				<option value="1.2">1.2</option>
+				<option value="1.5">1.5</option>
+				<option value="2.0">2.0</option>
+			</select>
+			<span class="tfScaleSelectArrow"></span>
+
+			<span class="tfLen">长 度</span>
+			<input type="text" id="t_lenInput" class="tfLenInput" value="100" onblur="tfLenInputChange(this.value)">
+			<a href="javaScript:" class="tfLenAdd" onclick="tfLenAddClick()"></a>
+			<a href="javaScript:" class="tfLenReduce" onclick="tfLenReduceClick()"></a>
+
+			<span class="tfSpace">间 距</span>
+			<input type="text" id="t_spaceInput" class="tfSpaceInput" value="40" onblur="tfSpaceInputChange(this.value)">
+			<a href="javaScript:" class="tfSpaceAdd" onclick="tfSpaceAddClick()"></a>
+			<a href="javaScript:" class="tfSpaceReduce" onclick="tfSpaceReduceClick()"></a>
+
+			<span class="tfFontSize1">字号①</span>
+			<select name="" id="f_fontSize1Select" class="tfFontSize1Select" onchange="tfFontSize1SelectChange(this.value)">
+				<option value="12">12</option>
+				<option value="13">13</option>
+				<option value="14" selected="selected">14</option>
+				<option value="15">15</option>
+				<option value="16">16</option>
+				<option value="17">17</option>
+				<option value="18">18</option>
+			</select>
+			<span class="tfFontSize1SelectArrow"></span>
+
+			<span class="tfFontSize2">字号②</span>
+			<select name="" id="f_fontSize2Select" class="tfFontSize2Select" onchange="tfFontSize2SelectChange(this.value)">
+				<option value="16">16</option>
+				<option value="17">17</option>
+				<option value="18">18</option>
+				<option value="19">19</option>
+				<option value="20" selected="selected">20</option>
+				<option value="21">21</option>
+				<option value="22">22</option>
+				<option value="23">23</option>
+				<option value="24">24</option>
+			</select>
+			<span class="tfFontSize2SelectArrow"></span>
+
+			<span class="inCapacity">进口道各车道饱和流率</span>
+			<span class="inLaneLabel">进口车道</span>
+			<select id="capacityInLaneSelectObj" class="capacityInLaneSelect" onchange="capacityInLaneSelectChange(this.value)">
+			</select>
+			<span class="capacityInLaneSelectArrow"></span>
+			<span class="inLaneCapacity">饱和流率</span>
+			<input type="text" class="inLaneCapacityInput" id="inLaneCapacityInputObj" value="1650" onblur="inLaneCapacityInputChange(this.value)">
+			<a href="javaScript:" class="inLaneCapacitySetAll" onclick="inLaneCapacitySetAllInClick()"></a>
+
+			<span class="heavyCarRatio">大车比例</span>
+			<input type="text" class="heavyCarRatioInput" id="heavyCarRatioInputObj" value="2" onblur="heavyCarRatioInputChange(this.value)">
+			<span class="heavyCarRatioInputUnit">%</span>
+			<span class="peakHourFactor">高峰小时系数</span>
+			<input type="text" class="peakHourFactorInput" id="peakHourFactorInputObj" value="0.95" onblur="peakHourFactorInputChange(this.value)">
+
+			<span class="inturnflow">进口道转向流量</span>
+
+
+
+
+			<div class="tfdirCanvasCon1">
+				<canvas width="50" id="t_canvas1" height="50"></canvas>
+			</div>
+			<input type="text" id="t_flowInput1" class="tfdirFlow1" onblur="tfInputChange(this.value)">
+
+			<div class="tfdirCanvasCon2">
+				<canvas width="50" height="50" id="t_canvas2"></canvas>
+			</div>
+			<input type="text" id="t_flowInput2" class="tfdirFlow2" onblur="tfInputChange(this.value)">
+
+
+
+			<div class="tfdirCanvasCon3">
+				<canvas width="50" height="50" id="t_canvas3"></canvas>
+			</div>
+			<input type="text" id="t_flowInput3" class="tfdirFlow3" onblur="tfInputChange(this.value)">
+
+
+
+			<div class="tfDirPan4" id="tfDirPan4">			
+				<div class="tfdirCanvasCon4">
+					<canvas width="50" height="50" id="t_canvas4"></canvas>
+				</div>
+				<input type="text" id="t_flowInput4" class="tfdirFlow4" onblur="tfInputChange(this.value)">
+
+			</div>
+
+			<div class="tfDirPan5" id="tfDirPan5">	
+				<div class="tfdirCanvasCon5">
+					<canvas width="50" height="50" id="t_canvas5"></canvas>
+				</div>
+				<input type="text" id="t_flowInput5" class="tfdirFlow5" onblur="tfInputChange(this.value)">
+			</div>
+
+			<input type="button" class="tfDataRest" id="tfDataRest" value="数据重置" onclick="tfDataRestClick()">
+			<input type="button" class="tfImgExport" id="tfImgExport" value="输出图片" onclick="tfImgExportOnclick()">
+		</div>
+
+		<div class="rightBar04" id="rightBarObj04" style="display: none;">
+			<span class="sigPhaseSum">相位总数</span>
+			<select name="" id="sigPhaseSumSelectObj" class="sigPhaseSumSelect" onchange="sigPhaseSumSelectOnchange(this.value)">
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4" selected="=selected">4</option>
+				<option value="5">5</option>
+				<option value="6">6</option>
+				<option value="7">7</option>
+				<option value="8">8</option>
+			</select>
+			<span class="sigPhaseSumSelectArrow"></span>
+
+			<span class="sigCycle">周 期</span>
+			<input type="text" class="sigCycleInput" id="sigCycleInputObj" value="80" onblur="sigCycleInputChange(this.value)">
+			<span class="sigCycleInputUnit">秒</span>
+
+			<div class="sigCycleLock" id="sigCycleLockConObj">
+				<a href="javaScript:" class="s_cycleLock" id="s_cycleLockObj" onclick="sigCycleLock()"></a>
+			</div>
+
+			<span class="sigPhaseIndex">第几相位</span>
+			<select name="" id="sigPhaseIndexSelectObj" class="sigPhaseIndexSelect" onchange="sigPhaseIndexSelectOnchange(this.value)">
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+			</select>
+			<span class="sigPhaseIndexSelectArrow"></span>
+
+			<span class="sigPhaseName">相位名称</span>
+			<input type="text" class="sigPhaseNameInput" id="sigPhaseNameInputObj" value="第1相位" onblur="sigPhaseNameInputChange(this.value)">
+
+			<span class="sigPhaseGreenTime">绿灯时长</span>
+			<input type="text" class="sigPhaseGreenTimeInput" id="sigPhaseGreenTimeInputObj" value="17" onblur="sigPhaseGreenTimeInputChange(this.value)">
+			<span class="sigPhaseGreenTimeInputUnit">秒</span>
+			<span class="sigPhaseYellowTime">黄灯时长</span>
+			<input type="text" class="sigPhaseYellowTimeInput" id="sigPhaseYellowTimeInputObj" value="3" onblur="sigPhaseYellowTimeInputChange(this.value)">
+			<span class="sigPhaseYellowTimeInputUnit">秒</span>
+			<span class="sigPhaseRedTime">全红时长</span>
+			<input type="text" class="sigPhaseRedTimeInput" id="sigPhaseRedTimeInputObj" value="0" onblur="sigPhaseRedTimeInputChange(this.value)">
+			<span class="sigPhaseRedTimeInputUnit">秒</span>
+			
+			<span class="sigLapPhase">搭接相位</span>
+			<select name="" class="sigLapPhaseSelect" id="sigLapPhaseSelectObj" onchange="sigLapPhaseSelectOnchange(this.value)">
+				<option value="0">否</option>
+				<option value="1">是</option>
+			</select>
+			<span class="sigLapPhaseSelectArrow"></span>
+
+			<span class="sigPhaseDir">进口方向</span>
+			<select name="" id="sigPhaseDirSelectObj" class="sigPhaseDirSelect" onchange="sigPhaseDirSelectOnchange(this.value)">
+			</select>
+			<span class="sigPhaseDirSelectArrow"></span>
+
+			<span class="sigLegend">图 例</span>
+			<select name="" class="sigLegendSelect" id="sigLegendSelectObj" onchange="sigLegendSelectOnchange(this.value)">
+				<option value="0">否</option>
+				<option value="1">是</option>
+			</select>
+			<span class="sigLegendSelectArrow"></span>
+
+			<span class="sigPhaseVehicle">机动车</span>
+			<div class="vehiclCanvasCon1" id="vehiclCanvasCon1Obj">
+				<canvas width="50" height="50" id="vehiclePhaseCanvas1" onclick="vehiclePhaseCanvas1Click()"></canvas>
+			</div>
+			<div class="vehiclCanvasCon2" id="vehiclCanvasCon2Obj">
+				<canvas width="50" height="50" id="vehiclePhaseCanvas2" onclick="vehiclePhaseCanvas2Click()"></canvas>
+			</div>
+			<div class="vehiclCanvasCon3" id="vehiclCanvasCon3Obj">
+				<canvas width="50" height="50" id="vehiclePhaseCanvas3" onclick="vehiclePhaseCanvas3Click()"></canvas>
+			</div>
+			<div class="vehiclCanvasCon4" id="vehiclCanvasCon4Obj">
+				<canvas width="50" height="50" id="vehiclePhaseCanvas4" onclick="vehiclePhaseCanvas4Click()"></canvas>
+			</div>
+			<div class="vehiclCanvasCon5" id="vehiclCanvasCon5Obj">
+				<canvas width="50" height="50" id="vehiclePhaseCanvas5" onclick="vehiclePhaseCanvas5Click()"></canvas>
+			</div>
+
+			<span class="sigPhaseNonVehicle">非机动车</span>
+			<div class="nonVehiclCanvasCon1" id="nonVehiclCanvasCon1Obj">
+				<canvas width="50" height="50" id="noneVehiclePhaseCanvas1" onclick="noneVehiclePhaseCanvas1Click()"></canvas>
+			</div>
+			<div class="nonVehiclCanvasCon2" id="nonVehiclCanvasCon2Obj">
+				<canvas width="50" height="50" id="noneVehiclePhaseCanvas2" onclick="noneVehiclePhaseCanvas2Click()"></canvas>
+			</div>
+			<div class="nonVehiclCanvasCon3" id="nonVehiclCanvasCon3Obj">
+				<canvas width="50" height="50" id="noneVehiclePhaseCanvas3" onclick="noneVehiclePhaseCanvas3Click()"></canvas>
+			</div>
+			<div class="nonVehiclCanvasCon4" id="nonVehiclCanvasCon4Obj">
+				<canvas width="50" height="50" id="noneVehiclePhaseCanvas4" onclick="noneVehiclePhaseCanvas4Click()"></canvas>
+			</div>
+			<div class="nonVehiclCanvasCon5" id="nonVehiclCanvasCon5Obj">
+				<canvas width="50" height="50" id="noneVehiclePhaseCanvas5" onclick="noneVehiclePhaseCanvas5Click()"></canvas>
+			</div>
+
+			<span class="sigPhaseSidewalk">行人</span>
+			<div class="sidewalkCanvasCon1" id="sidewalkCanvasCon1Obj">
+				<canvas width="50" height="50" id="sidewalkPhaseCanvas1" onclick="sidewalkPhaseCanvas1Click()"></canvas>
+			</div>
+			<div class="sidewalkCanvasCon2" id="sidewalkCanvasCon2Obj">
+				<canvas width="50" height="50" id="sidewalkPhaseCanvas2" onclick="sidewalkPhaseCanvas2Click()"></canvas>
+			</div>
+			<div class="sidewalkCanvasCon3" id="sidewalkCanvasCon3Obj">
+				<canvas width="50" height="50" id="sidewalkPhaseCanvas3" onclick="sidewalkPhaseCanvas3Click()"></canvas>
+			</div>
+
+			<span class="sigPhaseTfa">待转</span>
+			<div class="sigPhaseTfaCon1" id="sigPhaseTfaCon1Obj">
+				<canvas width="50" height="50" id="sigPhaseTfaCanvas1" onclick="sigPhaseTfaCanvas1Click()"></canvas>
+			</div>
+			<div class="sigPhaseTfaCon2" id="sigPhaseTfaCon2Obj">
+				<canvas width="50" height="50" id="sigPhaseTfaCanvas2" onclick="sigPhaseTfaCanvas2Click()"></canvas>
+			</div>
+
+
+			<span class="sigPhaseProve">优化方案</span>
+			<select id="sigPhaseProveSelectObj" class="sigPhaseProveSelect" onchange="sigPhaseProveSelectOnchange(this.value)">
+				<option value="0">否</option>
+				<option value="1">是</option>
+			</select>
+			<span class="sigPhaseProveSelectArrow"></span>
+
+			<span class="sigPhaseProveMinGreenIni">最小绿灯</span>
+			<input type="text" class="sigPhaseProveMinGreenIniInput" id="sigPhaseProveMinGreenIniInputObj" value="7" onblur="sigPhaseProveMinGreenIniInputChange(this.value)">
+			<span class="sigPhaseProveMinGreenIniInputUnit">秒</span>
+
+			
+
+			<span class="generateSigPhase">生成方案</span>
+			<select id="generateSigPhaseSelectObj" class="generateSigPhaseSelect" onchange="generateSigPhaseSelectOnchange(this.value)">
+				<option value="0">否</option>
+				<option value="1">是</option>
+			</select>
+			<span class="generateSigPhaseSelectArrow"></span>
+
+			<span class="generateSigPhaseOrder">相序类型</span>
+			<select id="generateSigPhaseOrderSelectObj" class="generateSigPhaseOrderSelect" onchange="generateSigPhaseOrderSelectOnchange(this.value)">
+				<option value="0">对放</option>
+				<option value="1">轮放</option>
+			</select>
+			<span class="generateSigPhaseOrderSelectArrow"></span>
+			
+			<span class="sigPhaseProveMinGreen">最小绿灯</span>
+			<input type="text" class="sigPhaseProveMinGreenInput" id="sigPhaseProveMinGreenInputObj" value="7" onblur="sigPhaseProveMinGreenInputChange(this.value)">
+			<span class="sigPhaseProveMinGreenInputUnit">秒</span>
+
+			<div class="sigProveShade" id="sigProveShadeObj"></div>
+			<div class="sigProveShadeOne" id="sigProveShadeOneObj"></div>
+			<div class="sigProveShadeTwo" id="sigProveShadeTwoObj"></div>
+
+			<input type="button" class="sigDataRest" id="sigDataRest" value="数据重置" onclick="sigDataRestClick()">
+			<input type="button" class="sigImgExport" id="sigImgExport" value="输出图片" onclick="sigImgExportOnclick()">
+		</div>
+
+		<div class="rightBar05" id="rightBarObj05" style="display: none;">
+
+			<div class="anaCon" id="anaConObj">
+				<a href="javaScript:" class="v_ana" id="v_anaObj" onclick="vcAnaOnclick()"></a>
+			</div>
+
+
+
+			<span class="vcAnaSiu1Span">方案一</span>
+			<select name="" id="vcAnaSiu1SelectObj" class="vcAnaSiu1Select" onchange="vcAnaSiu1SelectOnchange(this.value)">
+				<option value="0">否</option>
+				<option value="1" selected="=selected">是</option>
+			</select>
+			<span class="vcAnaSiu1SelectArrow"></span>
+
+			<div class="vcAnaCon1" id="vcAnaCon1Obj">
+				<span class="vcAna1Name">方案名称</span>
+				<input type="text" class="vcAna1NameInput" id="vcAna1NameInputObj" value="方案1" onblur="vcAna1NameInputChange(this.value)">
+
+				<span class="vcAnacha1">渠 化</span>
+				<select name="" class="vcAnacha1Select" id="vcAnacha1SelectObj" onchange="vcAnacha1SelectOnchange(this.value)">
+
+				</select>
+				<span class="vcAnacha1SelectArrow"></span>
+
+				<span class="vcAnatf1">流 量</span>
+				<select name="" id="vcAnatf1SelectObj" class="vcAnatf1Select" onchange="vcAnatf1SelectOnchange(this.value)">
+
+				</select>
+				<span class="vcAnatf1SelectArrow"></span>
+
+				<span class="vcAnasig1">信 号</span>
+				<select name="" class="vcAnasig1Select" id="vcAnasig1SelectObj" onchange="vcAnasig1SelectOnchange(this.value)">
+
+				</select>
+				<span class="vcAnasig1SelectArrow"></span>
+				<div class="vcAna1Shade" id="vcAna1ShadeObj"></div>
+			</div>
+
+
+			<span class="vcAnaSiu2Span">方案二</span>
+			<select name="" id="vcAnaSiu2SelectObj" class="vcAnaSiu2Select" onchange="vcAnaSiu2SelectOnchange(this.value)">
+				<option value="0" selected="=selected">否</option>
+				<option value="1">是</option>
+			</select>
+			<span class="vcAnaSiu2SelectArrow"></span>
+
+			<div class="vcAnaCon2" id="vcAnaCon2Obj">
+				<span class="vcAna2Name">方案名称</span>
+				<input type="text" class="vcAna2NameInput" id="vcAna2NameInputObj" value="方案2" onblur="vcAna2NameInputChange(this.value)">
+
+				<span class="vcAnacha2">渠 化</span>
+				<select name="" class="vcAnacha2Select" id="vcAnacha2SelectObj" onchange="vcAnacha2SelectOnchange(this.value)">
+
+				</select>
+				<span class="vcAnacha2SelectArrow"></span>
+
+				<span class="vcAnatf2">流 量</span>
+				<select name="" id="vcAnatf2SelectObj" class="vcAnatf2Select" onchange="vcAnatf2SelectOnchange(this.value)">
+
+				</select>
+				<span class="vcAnatf2SelectArrow"></span>
+
+				<span class="vcAnasig2">信 号</span>
+				<select name="" class="vcAnasig2Select" id="vcAnasig2SelectObj" onchange="vcAnasig2SelectOnchange(this.value)">
+
+				</select>
+				<span class="vcAnasig2SelectArrow"></span>
+				<div class="vcAna2Shade" id="vcAna2ShadeObj"></div>
+			</div>
+
+			<span class="vcAnaSiu3Span">方案三</span>
+			<select name="" id="vcAnaSiu3SelectObj" class="vcAnaSiu3Select" onchange="vcAnaSiu3SelectOnchange(this.value)">
+				<option value="0" selected="=selected">否</option>
+				<option value="1">是</option>
+			</select>
+			<span class="vcAnaSiu3SelectArrow"></span>
+
+			<div class="vcAnaCon3" id="vcAnaCon3Obj">
+				<span class="vcAna3Name">方案名称</span>
+				<input type="text" class="vcAna3NameInput" id="vcAna3NameInputObj" value="方案3" onblur="vcAna3NameInputChange(this.value)">
+
+				<span class="vcAnacha3">渠 化</span>
+				<select name="" class="vcAnacha3Select" id="vcAnacha3SelectObj" onchange="vcAnacha3SelectOnchange(this.value)">
+
+				</select>
+				<span class="vcAnacha3SelectArrow"></span>
+
+				<span class="vcAnatf3">流 量</span>
+				<select name="" id="vcAnatf3SelectObj" class="vcAnatf3Select" onchange="vcAnatf3SelectOnchange(this.value)">
+
+				</select>
+				<span class="vcAnatf3SelectArrow"></span>
+
+				<span class="vcAnasig3">信 号</span>
+				<select name="" class="vcAnasig3Select" id="vcAnasig3SelectObj" onchange="vcAnasig3SelectOnchange(this.value)">
+
+				</select>
+				<span class="vcAnasig2SelectArrow"></span>
+				<div class="vcAna3Shade" id="vcAna3ShadeObj"></div>
+			</div>
+
+			<div class="vcShade" id="vcShadeObj"></div>
+
+
+
+			<input type="button" class="r_vcExportToExcel" id="vcExportToExcel" value="导出数据" onclick="exportVcDataToExcel()">
+			<input type="button" class="r_vcExportToImg" id="vcExportToImg" value="输出图片" onclick="vcImgExportOnclick()">
+		</div>
+
+		<div class="rightBar06" id="rightBarObj06" style="display: none;">
+			<input type="button" class="r_losExportToExcel" id="losExportToExcel" value="导出数据" onclick="exportLosDataToExcel()">
+			<input type="button" class="r_losExportToImg" id="losExportToImg" value="输出图片" onclick="losImgExportOnclick()">
+		</div>
+
+		<div class="rightBar07" id="rightBarObj07" style="display: none;">
+
+			<div class="anaDelCon" id="anaDelConObj">
+				<a href="javaScript:" class="d_ana" id="d_anaObj" onclick="delAnaOnclick()"></a>
+			</div>
+
+
+
+			<span class="delAnaSiu1Span">方案一</span>
+			<select id="delAnaSiu1SelectObj" class="delAnaSiu1Select" onchange="delAnaSiu1SelectOnchange(this.value)">
+				<option value="0">否</option>
+				<option value="1" selected="=selected">是</option>
+			</select>
+			<span class="delAnaSiu1SelectArrow"></span>
+
+			<div class="delAnaCon1" id="delAnaCon1Obj">
+				<span class="delAna1Name">方案名称</span>
+				<input type="text" class="delAna1NameInput" id="delAna1NameInputObj" value="方案1" onblur="delAna1NameInputChange(this.value)">
+
+				<span class="delAnacha1">渠 化</span>
+				<select name="" class="delAnacha1Select" id="delAnacha1SelectObj" onchange="delAnacha1SelectOnchange(this.value)">
+
+				</select>
+				<span class="delAnacha1SelectArrow"></span>
+
+				<span class="delAnatf1">流 量</span>
+				<select name="" id="delAnatf1SelectObj" class="delAnatf1Select" onchange="delAnatf1SelectOnchange(this.value)">
+
+				</select>
+				<span class="delAnatf1SelectArrow"></span>
+
+				<span class="delAnasig1">信 号</span>
+				<select name="" class="delAnasig1Select" id="delAnasig1SelectObj" onchange="delAnasig1SelectOnchange(this.value)">
+
+				</select>
+				<span class="delAnasig1SelectArrow"></span>
+				<div class="delAna1Shade" id="delAna1ShadeObj"></div>
+			</div>
+
+
+			<span class="delAnaSiu2Span">方案二</span>
+			<select id="delAnaSiu2SelectObj" class="delAnaSiu2Select" onchange="delAnaSiu2SelectOnchange(this.value)">
+				<option value="0" selected="=selected">否</option>
+				<option value="1">是</option>
+			</select>
+			<span class="delAnaSiu2SelectArrow"></span>
+
+			<div class="delAnaCon2" id="delAnaCon2Obj">
+				<span class="delAna2Name">方案名称</span>
+				<input type="text" class="delAna2NameInput" id="delAna2NameInputObj" value="方案2" onblur="delAna2NameInputChange(this.value)">
+
+				<span class="delAnacha2">渠 化</span>
+				<select class="delAnacha2Select" id="delAnacha2SelectObj" onchange="delAnacha2SelectOnchange(this.value)">
+
+				</select>
+				<span class="delAnacha2SelectArrow"></span>
+
+				<span class="delAnatf2">流 量</span>
+				<select id="delAnatf2SelectObj" class="delAnatf2Select" onchange="delAnatf2SelectOnchange(this.value)">
+
+				</select>
+				<span class="delAnatf2SelectArrow"></span>
+
+				<span class="delAnasig2">信 号</span>
+				<select class="delAnasig2Select" id="delAnasig2SelectObj" onchange="delAnasig2SelectOnchange(this.value)">
+
+				</select>
+				<span class="delAnasig2SelectArrow"></span>
+				<div class="delAna2Shade" id="delAna2ShadeObj"></div>
+			</div>
+
+			<span class="delAnaSiu3Span">方案三</span>
+			<select id="delAnaSiu3SelectObj" class="delAnaSiu3Select" onchange="delAnaSiu3SelectOnchange(this.value)">
+				<option value="0" selected="=selected">否</option>
+				<option value="1">是</option>
+			</select>
+			<span class="delAnaSiu3SelectArrow"></span>
+
+			<div class="delAnaCon3" id="delAnaCon3Obj">
+				<span class="delAna3Name">方案名称</span>
+				<input type="text" class="delAna3NameInput" id="delAna3NameInputObj" value="方案3" onblur="delAna3NameInputChange(this.value)">
+
+				<span class="delAnacha3">渠 化</span>
+				<select class="delAnacha3Select" id="delAnacha3SelectObj" onchange="delAnacha3SelectOnchange(this.value)">
+
+				</select>
+				<span class="delAnacha3SelectArrow"></span>
+
+				<span class="delAnatf3">流 量</span>
+				<select id="delAnatf3SelectObj" class="delAnatf3Select" onchange="delAnatf3SelectOnchange(this.value)">
+
+				</select>
+				<span class="delAnatf3SelectArrow"></span>
+
+				<span class="delAnasig3">信 号</span>
+				<select class="delAnasig3Select" id="delAnasig3SelectObj" onchange="delAnasig3SelectOnchange(this.value)">
+
+				</select>
+				<span class="delAnasig2SelectArrow"></span>
+				<div class="delAna3Shade" id="delAna3ShadeObj"></div>
+			</div>
+
+			<div class="delShade" id="delShadeObj"></div>
+
+
+
+
+			<input type="button" class="r_delExportToExcel" id="delExportToExcel" value="导出数据" onclick="exportDelDataToExcel()">
+			<input type="button" class="r_delExportToImg" id="delExportToImg" value="输出图片" onclick="delImgExportOnclick()">
+		</div>
+
+		<div class="rightBar08" id="rightBarObj08" style="display: none;">
+
+			<div class="anaQueCon" id="anaQueConObj">
+				<a href="javaScript:" class="q_ana" id="q_anaObj" onclick="queAnaOnclick()"></a>
+			</div>
+
+
+
+			<span class="queAnaSiu1Span">方案一</span>
+			<select id="queAnaSiu1SelectObj" class="queAnaSiu1Select" onchange="queAnaSiu1SelectOnchange(this.value)">
+				<option value="0">否</option>
+				<option value="1" selected="=selected">是</option>
+			</select>
+			<span class="queAnaSiu1SelectArrow"></span>
+
+			<div class="queAnaCon1" id="queAnaCon1Obj">
+				<span class="queAna1Name">方案名称</span>
+				<input type="text" class="queAna1NameInput" id="queAna1NameInputObj" value="方案1" onblur="queAna1NameInputChange(this.value)">
+
+				<span class="queAnacha1">渠 化</span>
+				<select name="" class="queAnacha1Select" id="queAnacha1SelectObj" onchange="queAnacha1SelectOnchange(this.value)">
+
+				</select>
+				<span class="queAnacha1SelectArrow"></span>
+
+				<span class="queAnatf1">流 量</span>
+				<select name="" id="queAnatf1SelectObj" class="queAnatf1Select" onchange="queAnatf1SelectOnchange(this.value)">
+
+				</select>
+				<span class="queAnatf1SelectArrow"></span>
+
+				<span class="queAnasig1">信 号</span>
+				<select name="" class="queAnasig1Select" id="queAnasig1SelectObj" onchange="queAnasig1SelectOnchange(this.value)">
+
+				</select>
+				<span class="queAnasig1SelectArrow"></span>
+				<div class="queAna1Shade" id="queAna1ShadeObj"></div>
+			</div>
+
+
+			<span class="queAnaSiu2Span">方案二</span>
+			<select id="queAnaSiu2SelectObj" class="queAnaSiu2Select" onchange="queAnaSiu2SelectOnchange(this.value)">
+				<option value="0" selected="=selected">否</option>
+				<option value="1">是</option>
+			</select>
+			<span class="queAnaSiu2SelectArrow"></span>
+
+			<div class="queAnaCon2" id="queAnaCon2Obj">
+				<span class="queAna2Name">方案名称</span>
+				<input type="text" class="queAna2NameInput" id="queAna2NameInputObj" value="方案2" onblur="queAna2NameInputChange(this.value)">
+
+				<span class="queAnacha2">渠 化</span>
+				<select class="queAnacha2Select" id="queAnacha2SelectObj" onchange="queAnacha2SelectOnchange(this.value)">
+
+				</select>
+				<span class="queAnacha2SelectArrow"></span>
+
+				<span class="queAnatf2">流 量</span>
+				<select id="queAnatf2SelectObj" class="queAnatf2Select" onchange="queAnatf2SelectOnchange(this.value)">
+
+				</select>
+				<span class="queAnatf2SelectArrow"></span>
+
+				<span class="queAnasig2">信 号</span>
+				<select class="queAnasig2Select" id="queAnasig2SelectObj" onchange="queAnasig2SelectOnchange(this.value)">
+
+				</select>
+				<span class="queAnasig2SelectArrow"></span>
+				<div class="queAna2Shade" id="queAna2ShadeObj"></div>
+			</div>
+
+			<span class="queAnaSiu3Span">方案三</span>
+			<select id="queAnaSiu3SelectObj" class="queAnaSiu3Select" onchange="queAnaSiu3SelectOnchange(this.value)">
+				<option value="0" selected="=selected">否</option>
+				<option value="1">是</option>
+			</select>
+			<span class="queAnaSiu3SelectArrow"></span>
+
+			<div class="queAnaCon3" id="queAnaCon3Obj">
+				<span class="queAna3Name">方案名称</span>
+				<input type="text" class="queAna3NameInput" id="queAna3NameInputObj" value="方案3" onblur="queAna3NameInputChange(this.value)">
+
+				<span class="queAnacha3">渠 化</span>
+				<select class="queAnacha3Select" id="queAnacha3SelectObj" onchange="queAnacha3SelectOnchange(this.value)">
+
+				</select>
+				<span class="queAnacha3SelectArrow"></span>
+
+				<span class="queAnatf3">流 量</span>
+				<select id="queAnatf3SelectObj" class="queAnatf3Select" onchange="queAnatf3SelectOnchange(this.value)">
+
+				</select>
+				<span class="queAnatf3SelectArrow"></span>
+
+				<span class="queAnasig3">信 号</span>
+				<select class="queAnasig3Select" id="queAnasig3SelectObj" onchange="queAnasig3SelectOnchange(this.value)">
+
+				</select>
+				<span class="queAnasig2SelectArrow"></span>
+				<div class="queAna3Shade" id="queAna3ShadeObj"></div>
+			</div>
+
+			<div class="queShade" id="queShadeObj"></div>
+
+
+
+			<input type="button" class="r_queExportToExcel" id="queExportToExcel" value="导出数据" onclick="exportQueDataToExcel()">
+			<input type="button" class="r_queExportToImg" id="queExportToImg" value="输出图片" onclick="queImgExportOnclick()">
+		</div>	
+	</div>
+
+	<div class="popcon" id="popcontainer">
+		<div class="pImgCon1">
+			<input type="button" class="bCon1" id="bCon1" onclick="c_bCon1ObjClick()">
+		</div>
+		<div class="pImgCon2">
+			<input type="button" class="bCon2" id="bCon2" onclick="c_bCon2ObjClick()">
+		</div>
+		<div class="pImgCon3">
+			<input type="button" class="bCon3" id="bCon3" onclick="c_bCon3ObjClick()">
+		</div>
+		<div class="pImgCon4">
+			<input type="button" class="bCon4" id="bCon4" onclick="c_bCon4ObjClick()">
+		</div>
+		<div class="pImgCon5">
+			<input type="button" class="bCon5" id="bCon5" onclick="c_bCon5ObjClick()">
+		</div>
+		<div class="pImgCon6">
+			<input type="button" class="bCon6" id="bCon6" onclick="c_bCon6ObjClick()">
+		</div>
+		<div class="pImgCon7">
+			<input type="button" class="bCon7" id="bCon7" onclick="c_bCon7ObjClick()">
+		</div>
+		<div class="pImgCon8">
+			<input type="button" class="bCon8" id="bCon8" onclick="c_bCon8ObjClick()">
+		</div>
+		<div class="pImgCon9">
+			<input type="button" class="bCon9" id="bCon9" onclick="c_bCon9ObjClick()">
+		</div>
+		<div class="pImgCon10">
+			<input type="button" class="bCon10" id="bCon10" onclick="c_bCon10ObjClick()">
+		</div>
+		<div class="pImgCon11">
+			<input type="button" class="bCon11" id="bCon11" onclick="c_bCon11ObjClick()">
+		</div>
+		<div class="pImgCon12">
+			<input type="button" class="bCon12" id="bCon12" onclick="c_bCon12ObjClick()">
+		</div>
+		<div class="pImgCon13">
+			<input type="button" class="bCon13" id="bCon13" onclick="c_bCon13ObjClick()">
+		</div>
+
+
+		<div class="close">
+			<input type="button" class="cloBtn" id="closePopBtn" onclick="c_closePop()">
+		</div>
+	</div>
+	<div class="imgCon" id="imgContainer">
+		<img src="./img/round.png" alt="" width="10" height="20" id="round">
+		<img src="./img/left.png" alt="" width="10" height="20" id="left">
+		<img src="./img/straight.png" alt="" width="10" height="20" id="straight">
+		<img src="./img/right.png" alt="" width="10" height="20" id="right">
+		<img src="./img/straightright.png" alt="" width="10" height="20" id="straightright">
+		<img src="./img/leftround.png" alt="" width="10" height="20" id="leftround">
+		<img src="./img/rounstraight.png" alt="" width="10" height="20" id="rounstraight">
+		<img src="./img/leftstraight.png" alt="" width="10" height="20" id="leftstraight">
+		<img src="./img/leftstraright.png" alt="" width="10" height="20" id="leftstraright">
+		<img src="./img/leftright.png" alt="" width="10" height="20" id="leftright">
+
+		<img src="./img/round01.png" alt="" width="20" height="50" id="round01">
+		<img src="./img/left01.png" alt="" width="20" height="50" id="left01">
+		<img src="./img/straight01.png" alt="" width="25" height="50" id="straight01">
+		<img src="./img/right01.png" alt="" width="20" height="50" id="right01">
+		<img src="./img/straightright01.png" alt="" width="20" height="50" id="straightright01">
+		<img src="./img/leftround01.png" alt="" width="20" height="50" id="leftround01">
+		<img src="./img/rounstraight01.png" alt="" width="20" height="50" id="rounstraight01">
+		<img src="./img/leftstraight01.png" alt="" width="20" height="50" id="leftstraight01">
+		<img src="./img/leftstraright01.png" alt="" width="22" height="50" id="leftstraright01">
+		<img src="./img/leftright01.png" alt="" width="20" height="50" id="leftright01">
+
+
+
+
+		<img src="./img/round02.png" alt="" width="10" height="20" id="round02">
+		<img src="./img/left02.png" alt="" width="10" height="20" id="left02">
+		<img src="./img/straight02.png" alt="" width="10" height="20" id="straight02">
+		<img src="./img/right02.png" alt="" width="10" height="20" id="right02">
+		<img src="./img/straightright02.png" alt="" width="10" height="20" id="straightright02">
+		<img src="./img/leftround02.png" alt="" width="10" height="20" id="leftround02">
+		<img src="./img/rounstraight02.png" alt="" width="10" height="20" id="rounstraight02">
+		<img src="./img/leftstraight02.png" alt="" width="10" height="20" id="leftstraight02">
+		<img src="./img/leftstraright02.png" alt="" width="10" height="20" id="leftstraright02">
+		<img src="./img/leftright02.png" alt="" width="10" height="20" id="leftright02">
+		<img src="./img/export.png" alt="" width="10" height="20" id="export">
+
+		<img src="./img/bus.png" alt="" width="6" height="107" id="bus">
+		<img src="./img/valane.png" alt="" width="10" height="47" id="valane">
+		<img src="./img/blan.png" alt="" width="10" height="20" id="blan">
+
+		<img src="./img/tfround.png" alt="" width="28" height="35" id="tfround">
+		<img src="./img/tfround01.png" alt="" width="28" height="35" id="tfround01">
+
+		<img src="./img/noneCross.png" alt="" width="15" height="35" id="noneVehcileCross">
+		<img src="./img/noneCross01.png" alt="" width="15" height="35" id="noneVehcileCross01">
+
+		<img src="./img/sideCrossRight.png" alt="" width="15" height="35" id="sideCrossRight">
+		<img src="./img/sideCrossRight01.png" alt="" width="15" height="35" id="sideCrossRight01">
+
+		<img src="./img/sideCrossLeft.png" alt="" width="15" height="35" id="sideCrossLeft">
+		<img src="./img/sideCrossLeft01.png" alt="" width="15" height="35" id="sideCrossLeft01">
+		<img src="./img/vcround.png" alt="" width="20" height="35" id="vcround">
+
+		<img src="./img/north.png" alt="" width="100" height="130" id="northImg">
+	</div>
+
+	<div class="sigPopcon" id="sigPopcontainer">
+		<span class="s_popPhaseName" id="sigPopPhaseName">第2相位</span>
+		<span class="s_popTimeType" id="sigPopTimeType">绿灯时长:</span>
+		<input type="text" class="s_popTimeInput" id="sigPopTimeInput">
+		<span class="s_popSec">秒</span>
+		<input type="button" class="sigPop_ok" id="sigPop_okObj" value="确 定" onclick="sigPopOkClick()">
+		<div class="sigPopClose">
+			<input type="button" class="sigPopcloseInput" id="sigClosePopBtn" onclick="sigPopCloseClick()">
+		</div>
+	</div>
+
+	<div class="sigPhaseImgPopcon" id="sigPhaseImgPopcontainer">
+		<canvas width="550" height="550" id="popPhaseImgCanvas" class="popPhaseImgCanvasClass"></canvas>
+		<input type="button" class="sigPhaseImgPop_ok" id="sigPhaseImgPop_okObj" value="输出图片" onclick="sigPhaseImgPopOkClick()">
+		<div class="sigPhaseImgPopClose">
+			<input type="button" class="sigPhaseImgPopcloseInput" id="sigPhaseImgClosePopBtn" onclick="sigPhaseImgPopCloseClick()">
+		</div>
+	</div>
+
+	<div class="tfPopcon" id="tfPopcontainer">
+		<span class="t_tfFromDirName" id="tfFromDirName">方向1</span>
+		<span class="t_tfZhi" id="tfPopPhaseName">至：</span>
+		<span class="t_tfToDirName" id="tfToDirName">方向2</span>
+		<span class="t_tfVolume" id="tfToDirName">流 量</span>
+		<input type="text" class="t_popVolumeInput" id="tfpopVolumeInput">
+		<input type="button" class="tfPop_ok" id="tfPop_okObj" value="确 定" onclick="tfPopOkClick()">
+		<div class="tfPopClose">
+			<input type="button" class="tfPopcloseInput" id="tfClosePopBtn" onclick="tfPopCloseClick()">
+		</div>
+	</div>
+
+	<div class="chaImgDownLoadCon" id="chaImgDownLoadConObj">
+		<input type="button" class="chaImgSmall" id="chaImgSmallObj" value="小 图" onclick="chaImgSmallClick()">
+		<input type="button" class="chaImgBig" id="chaImgBigObj" value="大 图" onclick="chaImgBigClick()">
+
+		<div class="chaImgDownloadClose">
+			<input type="button" class="chaImgDownloadCloseInput" id="chaImgDownloadCloseBtn" onclick="chaImgDownloadCloseClick()">
+		</div>
+
+		<span class="chaImgSmallSpan">550*550像素</span>
+		<span class="chaImgBigSpan">1100*1100像素</span>
+	</div>
+	
+
+<div class="colpick colpick_rgbhex" id="collorpicker_234" style="position: absolute;"><div class="colpick_color" style="background-color: rgb(255, 0, 255);"><div class="colpick_color_overlay1"><div class="colpick_color_overlay2"><div class="colpick_selector_outer" style="left: 0px; top: 63px;"><div class="colpick_selector_inner"></div></div></div></div></div><div class="colpick_hue" style="background:-webkit-linear-gradient(top center,#ff0000,#ff0080,#ff00ff,#8000ff,#0000ff,#0080ff,#00ffff,#00ff80,#00ff00,#80ff00,#ffff00,#ff8000,#ff0000); background:-moz-linear-gradient(top center,#ff0000,#ff0080,#ff00ff,#8000ff,#0000ff,#0080ff,#00ffff,#00ff80,#00ff00,#80ff00,#ffff00,#ff8000,#ff0000); background:linear-gradient(to bottom,#ff0000,#ff0080,#ff00ff,#8000ff,#0000ff,#0080ff,#00ffff,#00ff80,#00ff00,#80ff00,#ffff00,#ff8000,#ff0000); "><div class="colpick_hue_arrs" style="top: 26px;"><div class="colpick_hue_larr"></div><div class="colpick_hue_rarr"></div></div></div><div class="colpick_new_color" style="background-color: rgb(152, 152, 152);"></div><div class="colpick_current_color" style="background-color: rgb(152, 152, 152);"></div><div class="colpick_hex_field"><div class="colpick_field_letter">#</div><input type="text" maxlength="6" size="6"></div><div class="colpick_rgb_r colpick_field"><div class="colpick_field_letter">R</div><input type="text" maxlength="3" size="3"><div class="colpick_field_arrs"><div class="colpick_field_uarr"></div><div class="colpick_field_darr"></div></div></div><div class="colpick_rgb_g colpick_field"><div class="colpick_field_letter">G</div><input type="text" maxlength="3" size="3"><div class="colpick_field_arrs"><div class="colpick_field_uarr"></div><div class="colpick_field_darr"></div></div></div><div class="colpick_rgb_b colpick_field"><div class="colpick_field_letter">B</div><input type="text" maxlength="3" size="3"><div class="colpick_field_arrs"><div class="colpick_field_uarr"></div><div class="colpick_field_darr"></div></div></div><div class="colpick_hsx_h colpick_field"><div class="colpick_field_letter">H</div><input type="text" maxlength="3" size="3"><div class="colpick_field_arrs"><div class="colpick_field_uarr"></div><div class="colpick_field_darr"></div></div></div><div class="colpick_hsx_s colpick_field"><div class="colpick_field_letter">S</div><input type="text" maxlength="3" size="3"><div class="colpick_field_arrs"><div class="colpick_field_uarr"></div><div class="colpick_field_darr"></div></div></div><div class="colpick_hsx_x colpick_field"><div class="colpick_field_letter">B</div><input type="text" maxlength="3" size="3"><div class="colpick_field_arrs"><div class="colpick_field_uarr"></div><div class="colpick_field_darr"></div></div></div><div class="colpick_submit">OK</div></div><div class="colpick colpick_rgbhex" id="collorpicker_146" style="position: absolute;"><div class="colpick_color" style="background-color: rgb(255, 0, 255);"><div class="colpick_color_overlay1"><div class="colpick_color_overlay2"><div class="colpick_selector_outer" style="left: 0px; top: 63px;"><div class="colpick_selector_inner"></div></div></div></div></div><div class="colpick_hue" style="background:-webkit-linear-gradient(top center,#ff0000,#ff0080,#ff00ff,#8000ff,#0000ff,#0080ff,#00ffff,#00ff80,#00ff00,#80ff00,#ffff00,#ff8000,#ff0000); background:-moz-linear-gradient(top center,#ff0000,#ff0080,#ff00ff,#8000ff,#0000ff,#0080ff,#00ffff,#00ff80,#00ff00,#80ff00,#ffff00,#ff8000,#ff0000); background:linear-gradient(to bottom,#ff0000,#ff0080,#ff00ff,#8000ff,#0000ff,#0080ff,#00ffff,#00ff80,#00ff00,#80ff00,#ffff00,#ff8000,#ff0000); "><div class="colpick_hue_arrs" style="top: 26px;"><div class="colpick_hue_larr"></div><div class="colpick_hue_rarr"></div></div></div><div class="colpick_new_color" style="background-color: rgb(152, 152, 152);"></div><div class="colpick_current_color" style="background-color: rgb(152, 152, 152);"></div><div class="colpick_hex_field"><div class="colpick_field_letter">#</div><input type="text" maxlength="6" size="6"></div><div class="colpick_rgb_r colpick_field"><div class="colpick_field_letter">R</div><input type="text" maxlength="3" size="3"><div class="colpick_field_arrs"><div class="colpick_field_uarr"></div><div class="colpick_field_darr"></div></div></div><div class="colpick_rgb_g colpick_field"><div class="colpick_field_letter">G</div><input type="text" maxlength="3" size="3"><div class="colpick_field_arrs"><div class="colpick_field_uarr"></div><div class="colpick_field_darr"></div></div></div><div class="colpick_rgb_b colpick_field"><div class="colpick_field_letter">B</div><input type="text" maxlength="3" size="3"><div class="colpick_field_arrs"><div class="colpick_field_uarr"></div><div class="colpick_field_darr"></div></div></div><div class="colpick_hsx_h colpick_field"><div class="colpick_field_letter">H</div><input type="text" maxlength="3" size="3"><div class="colpick_field_arrs"><div class="colpick_field_uarr"></div><div class="colpick_field_darr"></div></div></div><div class="colpick_hsx_s colpick_field"><div class="colpick_field_letter">S</div><input type="text" maxlength="3" size="3"><div class="colpick_field_arrs"><div class="colpick_field_uarr"></div><div class="colpick_field_darr"></div></div></div><div class="colpick_hsx_x colpick_field"><div class="colpick_field_letter">B</div><input type="text" maxlength="3" size="3"><div class="colpick_field_arrs"><div class="colpick_field_uarr"></div><div class="colpick_field_darr"></div></div></div><div class="colpick_submit">OK</div></div><div class="colpick colpick_rgbhex" id="collorpicker_163" style="position: absolute;"><div class="colpick_color" style="background-color: rgb(13, 255, 0);"><div class="colpick_color_overlay1"><div class="colpick_color_overlay2"><div class="colpick_selector_outer" style="left: 135px; top: 19px;"><div class="colpick_selector_inner"></div></div></div></div></div><div class="colpick_hue" style="background:-webkit-linear-gradient(top center,#ff0000,#ff0080,#ff00ff,#8000ff,#0000ff,#0080ff,#00ffff,#00ff80,#00ff00,#80ff00,#ffff00,#ff8000,#ff0000); background:-moz-linear-gradient(top center,#ff0000,#ff0080,#ff00ff,#8000ff,#0000ff,#0080ff,#00ffff,#00ff80,#00ff00,#80ff00,#ffff00,#ff8000,#ff0000); background:linear-gradient(to bottom,#ff0000,#ff0080,#ff00ff,#8000ff,#0000ff,#0080ff,#00ffff,#00ff80,#00ff00,#80ff00,#ffff00,#ff8000,#ff0000); "><div class="colpick_hue_arrs" style="top: 105px;"><div class="colpick_hue_larr"></div><div class="colpick_hue_rarr"></div></div></div><div class="colpick_new_color" style="background-color: rgb(39, 223, 29);"></div><div class="colpick_current_color" style="background-color: rgb(39, 223, 29);"></div><div class="colpick_hex_field"><div class="colpick_field_letter">#</div><input type="text" maxlength="6" size="6"></div><div class="colpick_rgb_r colpick_field"><div class="colpick_field_letter">R</div><input type="text" maxlength="3" size="3"><div class="colpick_field_arrs"><div class="colpick_field_uarr"></div><div class="colpick_field_darr"></div></div></div><div class="colpick_rgb_g colpick_field"><div class="colpick_field_letter">G</div><input type="text" maxlength="3" size="3"><div class="colpick_field_arrs"><div class="colpick_field_uarr"></div><div class="colpick_field_darr"></div></div></div><div class="colpick_rgb_b colpick_field"><div class="colpick_field_letter">B</div><input type="text" maxlength="3" size="3"><div class="colpick_field_arrs"><div class="colpick_field_uarr"></div><div class="colpick_field_darr"></div></div></div><div class="colpick_hsx_h colpick_field"><div class="colpick_field_letter">H</div><input type="text" maxlength="3" size="3"><div class="colpick_field_arrs"><div class="colpick_field_uarr"></div><div class="colpick_field_darr"></div></div></div><div class="colpick_hsx_s colpick_field"><div class="colpick_field_letter">S</div><input type="text" maxlength="3" size="3"><div class="colpick_field_arrs"><div class="colpick_field_uarr"></div><div class="colpick_field_darr"></div></div></div><div class="colpick_hsx_x colpick_field"><div class="colpick_field_letter">B</div><input type="text" maxlength="3" size="3"><div class="colpick_field_arrs"><div class="colpick_field_uarr"></div><div class="colpick_field_darr"></div></div></div><div class="colpick_submit">OK</div></div><div class="colpick colpick_rgbhex" id="collorpicker_667" style="position: absolute;"><div class="colpick_color" style="background-color: rgb(255, 60, 0);"><div class="colpick_color_overlay1"><div class="colpick_color_overlay2"><div class="colpick_selector_outer" style="left: 142px; top: 11px;"><div class="colpick_selector_inner"></div></div></div></div></div><div class="colpick_hue" style="background:-webkit-linear-gradient(top center,#ff0000,#ff0080,#ff00ff,#8000ff,#0000ff,#0080ff,#00ffff,#00ff80,#00ff00,#80ff00,#ffff00,#ff8000,#ff0000); background:-moz-linear-gradient(top center,#ff0000,#ff0080,#ff00ff,#8000ff,#0000ff,#0080ff,#00ffff,#00ff80,#00ff00,#80ff00,#ffff00,#ff8000,#ff0000); background:linear-gradient(to bottom,#ff0000,#ff0080,#ff00ff,#8000ff,#0000ff,#0080ff,#00ffff,#00ff80,#00ff00,#80ff00,#ffff00,#ff8000,#ff0000); "><div class="colpick_hue_arrs" style="top: 149px;"><div class="colpick_hue_larr"></div><div class="colpick_hue_rarr"></div></div></div><div class="colpick_new_color" style="background-color: rgb(236, 71, 20);"></div><div class="colpick_current_color" style="background-color: rgb(236, 71, 20);"></div><div class="colpick_hex_field"><div class="colpick_field_letter">#</div><input type="text" maxlength="6" size="6"></div><div class="colpick_rgb_r colpick_field"><div class="colpick_field_letter">R</div><input type="text" maxlength="3" size="3"><div class="colpick_field_arrs"><div class="colpick_field_uarr"></div><div class="colpick_field_darr"></div></div></div><div class="colpick_rgb_g colpick_field"><div class="colpick_field_letter">G</div><input type="text" maxlength="3" size="3"><div class="colpick_field_arrs"><div class="colpick_field_uarr"></div><div class="colpick_field_darr"></div></div></div><div class="colpick_rgb_b colpick_field"><div class="colpick_field_letter">B</div><input type="text" maxlength="3" size="3"><div class="colpick_field_arrs"><div class="colpick_field_uarr"></div><div class="colpick_field_darr"></div></div></div><div class="colpick_hsx_h colpick_field"><div class="colpick_field_letter">H</div><input type="text" maxlength="3" size="3"><div class="colpick_field_arrs"><div class="colpick_field_uarr"></div><div class="colpick_field_darr"></div></div></div><div class="colpick_hsx_s colpick_field"><div class="colpick_field_letter">S</div><input type="text" maxlength="3" size="3"><div class="colpick_field_arrs"><div class="colpick_field_uarr"></div><div class="colpick_field_darr"></div></div></div><div class="colpick_hsx_x colpick_field"><div class="colpick_field_letter">B</div><input type="text" maxlength="3" size="3"><div class="colpick_field_arrs"><div class="colpick_field_uarr"></div><div class="colpick_field_darr"></div></div></div><div class="colpick_submit">OK</div></div></body></html>
