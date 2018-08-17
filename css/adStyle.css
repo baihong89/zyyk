@@ -5,6 +5,14 @@ select:focus{outline: none; }
 input{display: inline-block;height: 14px;padding-left: 10px; width: 58px;font-size: 12px;color:#EC4714;border: #B3B3B3 1px solid;border-radius: 3px;}
 input:focus{outline: none;}
 
+.head_text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 18px;
+}
+
 #nprogress{position: fixed;top: 0;right: 0;bottom: 0;left: 0;background-color: #f7f7f7;z-index: 999;}
 .spinner-icon{display: none!important;}
 .progress{border: 1px solid;padding: 1px;}
