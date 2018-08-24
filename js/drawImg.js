@@ -8,6 +8,13 @@ window.onload=function(){
     JiantouDown();
 }
 
+function clearRect(){
+    var canvas = document.getElementById('drawCanvas');
+    if(!canvas.getContext) return;
+    var ctx = canvas.getContext("2d");
+    ctx.clearRect(0,0,550,550);
+}
+
 function draw(){
     var canvas = document.getElementById('drawCanvas');
     if(!canvas.getContext) return;

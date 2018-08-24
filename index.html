@@ -2,7 +2,7 @@
 <!-- saved from url=(0026)http://www.aidaroe.com/pro -->
 <html lang="en" class=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	
-	<title>振业优控交叉口分析助手</title>
+	<title>振业优控路口绘制助手</title>
 	<meta name="keywords" content="交叉口分析,交叉口渠化,交叉口流量图">
 	<meta name="description" content="">
 	<link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon"> 
@@ -19,7 +19,7 @@
 <body>
 	<div class="head">
 		<div class="h_con head_text">
-			振业优控交叉口分析助手
+			振业优控路口绘制助手
 		</div>
 	</div>
 	<div class="adContainer" id="adContainer" style="position: absolute; top: 20px; left: 111.5px;">
@@ -35,7 +35,7 @@
 			<div class="l_tool" id="toolBtnConObj01" onclick="intGeoClick()" style="border: 1px solid rgb(236, 71, 20);">
 				<a href="javaScript:" id="intGeo" class="intGeo" style="background: url(./img/Iconselect.png) 0px -2px / auto no-repeat scroll padding-box border-box rgba(0, 0, 0, 0);"></a>
 			</div>
-			<div class="l_tool" id="toolBtnConObj02" onclick="intChaClick()">
+			<!-- <div class="l_tool" id="toolBtnConObj02" onclick="intChaClick()">
 				<a href="javaScript:" id="intCha" class="intCha"></a>
 			</div>
 			<div class="l_tool" id="toolBtnConObj03" onclick="intTfClick()">
@@ -60,11 +60,11 @@
 			<div class="l_tool" id="toolBtnConObj06" onclick="evLosClick()">
 				<a href="javaScript:" id="evLos" class="evLos"></a>
 				<span class="t_tip" id="losSpan" style="color: rgb(51, 51, 51);">Los</span>
-			</div>								
+			</div>								 -->
 		</div>
-		<div class="a_tipCon01" id="tipConObj01" style="display: block;">
+		<!-- <div class="a_tipCon01" id="tipConObj01" style="display: block;">
 			<p class="a_tip">最多支持五路相交</p>
-		</div>
+		</div> -->
 		<div class="a_tipCon02" id="tipConObj02" style="display: none;">
 			<div class="t_chaSiuCon1" id="chaSiuCon1">			
 				<input type="text" placeholder="方案1" class="t_chaSius1" id="chaSiuInput1" onclick="chaSiuInputClick1()" onblur="chaSiuInput1Change(this.value)">
@@ -256,9 +256,9 @@
 		
 		<div class="a_canvasCon" id="canvasConObj" style="overflow: hidden;">
 			<canvas id="drawCanvas" width="550" height="550"></canvas>
-			<div class="c_iniPMoveCon" id="c_iniPMoveConObj" style="display: block;">
+			<!-- <div class="c_iniPMoveCon" id="c_iniPMoveConObj" style="display: block;">
 				<a href="javaScript:" class="c_iniPMove" id="c_iniPMoveObj" onclick="chaIniPMove()"></a>
-			</div>
+			</div> -->
 			<div class="c_refreshCon" id="c_refreshConObj" style="display: none;">
 				<a href="javaScript:" class="c_refresh" id="c_refreshObj" onclick="chaRefresh()">N</a>
 			</div>
@@ -313,7 +313,7 @@
 			<div class="anaAllCon" id="anaAllConObj"></div>			
 		</div>
 		<div class="rightBar01" id="rightBarObj01" style="display: block;">
-			<input type="button" class="r_reset01" id="geoReset" value="重新绘制" onclick="draw()">
+			<input type="button" class="r_reset01" id="geoReset" value="重新绘制" onclick="clearRect()">
 		</div>
 		<div class="rightBar02" id="rightBarObj02" style="display: none;">
 			<span class="chaDir">方 向</span>
