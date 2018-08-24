@@ -13,43 +13,10 @@
 	<script src="./js/colpick.js" type="text/javascript"></script>
 	<script src="./js/sweetalert.min.js" type="text/javascript"></script>
 	<script src="./js/nprogress.js" type="text/javascript"></script>
-	<script type="text/javascript">
-            $(function(){
-                NProgress.configure({
-                    template: $('#splash-template').html()
-                });
-                NProgress.start();
-            });         
-    </script>
-	<script src="./js/draw.js" type="text/javascript"></script>
-
 	<script src="./js/echarts.common.min.js" type="text/javascript"></script>
-	<script>
-		var _hmt = _hmt || [];
-		(function() {
-		  var hm = document.createElement("script");
-		  hm.src = "//hm.baidu.com/hm.js?9444d4fb0f2040b750e4ec14eed1eca0";
-		  var s = document.getElementsByTagName("script")[0]; 
-		  s.parentNode.insertBefore(hm, s);
-		})();
-	</script>
-
-	
-
+	<script src="./js/drawImg.js" type="text/javascript"></script>
 </head>
 <body>
-	 <script type="text" id="splash-template">
-            <div class="splash card">
-                <div role="spinner">
-                    <div class="spinner-icon"></div>
-                </div>
-                <p class="lead" >交叉口分析助手</p>
-                <div class="progress">
-                    <div class="mybar" role="bar">
-                    </div>
-                </div>
-            </div>
-    </script>
 	<div class="head">
 		<div class="h_con head_text">
 			振业优控交叉口分析助手
@@ -346,7 +313,7 @@
 			<div class="anaAllCon" id="anaAllConObj"></div>			
 		</div>
 		<div class="rightBar01" id="rightBarObj01" style="display: block;">
-			<input type="button" class="r_reset01" id="geoReset" value="重新绘制" onclick="geoResetClick()">
+			<input type="button" class="r_reset01" id="geoReset" value="重新绘制" onclick="draw()">
 		</div>
 		<div class="rightBar02" id="rightBarObj02" style="display: none;">
 			<span class="chaDir">方 向</span>
